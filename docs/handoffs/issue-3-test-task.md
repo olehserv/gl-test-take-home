@@ -55,6 +55,7 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
    (`docs/handoffs/issue-9-extract-domain-library.md`).
 3. **API refactor:** API-key check as an endpoint filter/middleware reading from
    config; return `ProblemDetails` on invalid input; keep `Program.cs` thin.
+   → **tracked in #11** (`docs/handoffs/issue-11-api-refactor.md`).
 4. **Unit tests:** `Domain.UnitTests` for `MeasurementValidator` (`[Theory]` +
    `[InlineData]`), optionally `InMemoryStore` filtering.
 5. **Integration tests:** real tests via `WebApplicationFactory<Program>` —
@@ -65,9 +66,17 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
    `Status` field. No logic in code-behind.
 7. **Polish:** point `DeviceSimulator` at `Domain.Measurement`; write `SOLUTION.md`;
    confirm CI is green.
+8. **Security hardening:** (raised in the #11 review)
+   - Compare the API key in **constant time** (`CryptographicOperations.FixedTimeEquals`)
+     and consider replacing the hand-rolled check with real ASP.NET
+     authentication/authorization middleware (`AddAuthentication` + `RequireAuthorization`).
+   - Serve Swagger only outside **Production** (`if (app.Environment.IsDevelopment())`).
 
 ## Sub-issues
-- [ ] #9 — Extract domain logic into a `Domain` class library (step 2).
+- [x] #7 - **Introduce AI features** into solution.
+- [x] **Prepare:** confirm `dotnet build` and `dotnet test` are green.
+- [x] #9 — Extract domain logic into a `Domain` class library (step 2).
+- [ ] #11 — Refactor the API into a thin web layer (step 3).
 
 ## Key decisions
 - Keep `InMemoryStore` in `Domain` for now (no framework dependency).
