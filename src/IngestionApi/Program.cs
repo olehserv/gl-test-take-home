@@ -1,3 +1,5 @@
+using Domain;
+
 namespace IngestionApi;
 
 public class Program
