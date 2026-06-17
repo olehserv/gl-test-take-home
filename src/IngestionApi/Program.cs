@@ -1,4 +1,6 @@
 using Domain;
+using IngestionApi.Auth;
+using IngestionApi.Endpoints;
 
 namespace IngestionApi;
 
@@ -18,32 +20,11 @@ public class Program
         app.UseSwagger();
         app.UseSwaggerUI();
 
+        app.UseMiddleware<ApiKeyMiddleware>();
+
         app.MapGet("/healthz", () => Results.Ok(new { status = "healthy" }));
-
-        app.MapPost("/api/v1/measurements", async (Measurement m, IMeasurementStore store, HttpContext ctx) =>
-        {
-            if (!ValidateApiKey(ctx))
-                return Results.Unauthorized();
-
-            if (!MeasurementValidator.IsValid(m))
-                return Results.BadRequest("invalid measurement");
-
-            await store.AddAsync(m);
-
-            return Results.Accepted($"/api/v1/measurements/{m.MeasurementId}", m);
-        });
-
-        app.MapGet("/api/v1/measurements", async (string? type, DateTimeOffset? since, IMeasurementStore store) =>
-        {
-            var results = await store.QueryAsync(type, since ?? DateTimeOffset.UtcNow.AddMinutes(-5));
-            return Results.Ok(results);
-        });
+        app.MapMeasurementEndpoints();
 
         await app.RunAsync();
-    }
-
-    private static bool ValidateApiKey(HttpContext ctx)
-    {
-        return ctx.Request.Headers.TryGetValue("x-api-key", out var v) && v == "local-dev";
     }
 }
