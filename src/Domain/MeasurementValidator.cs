@@ -1,4 +1,4 @@
-﻿namespace IngestionApi;
+﻿namespace Domain;
 
 public static class MeasurementValidator
 {

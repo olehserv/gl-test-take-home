@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Domain class library: the model and rules of the system.
+    It must NOT reference ASP.NET, WPF, HTTP, or any I/O framework.
+    Everything depends on Domain; Domain depends on nothing.
+    (Nullable, ImplicitUsings, and MinVer come from src/Directory.Build.props.)
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>

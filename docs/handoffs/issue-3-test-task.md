@@ -3,7 +3,7 @@
 - **Issue:** #3 (link)
 - **Branch:** `feat/modernize-architecture`
 - **Owner:** Oleh Shevtsiv
-- **Status:** todo
+- **Status:** in progress
 
 ## Description
 ### Scenario
@@ -51,7 +51,8 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
 1. **Prepare:** confirm `dotnet build` and `dotnet test` are green.
 2. **Domain library:** create `src/Domain`, move `Measurement`,
    `MeasurementValidator`, `IMeasurementStore`, `InMemoryStore`; add reference
-   `IngestionApi → Domain`; fix namespaces.
+   `IngestionApi → Domain`; fix namespaces. → **tracked in #9**
+   (`docs/handoffs/issue-9-extract-domain-library.md`).
 3. **API refactor:** API-key check as an endpoint filter/middleware reading from
    config; return `ProblemDetails` on invalid input; keep `Program.cs` thin.
 4. **Unit tests:** `Domain.UnitTests` for `MeasurementValidator` (`[Theory]` +
@@ -65,14 +66,13 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
 7. **Polish:** point `DeviceSimulator` at `Domain.Measurement`; write `SOLUTION.md`;
    confirm CI is green.
 
+## Sub-issues
+- [ ] #9 — Extract domain logic into a `Domain` class library (step 2).
+
 ## Key decisions
-- `Measurement.Value`: `object` → `double` (proposed). Record as an ADR with the
-  trade-off (some devices may send non-numeric values).
 - Keep `InMemoryStore` in `Domain` for now (no framework dependency).
 
 ## Open questions / risks
-- Changing `Measurement.Value` to `double` could break non-numeric value types —
-  confirm expected value types before committing.
 - WPF runs only on Windows; verify the desktop app there before marking done.
 
 ## How to verify
