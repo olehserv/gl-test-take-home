@@ -1,3 +1,6 @@
+using System.Security.Cryptography;
+using System.Text;
+
 namespace IngestionApi.Auth;
 
 /// <summary>
@@ -14,7 +17,7 @@ public sealed class ApiKeyMiddleware
     internal const string ApiKeyConfigName = "Api:Key";
 
     private readonly RequestDelegate _next;
-    private readonly string _expectedKey;
+    private readonly byte[] _expectedKeyBytes;
 
     public ApiKeyMiddleware(RequestDelegate next, IConfiguration configuration)
     {
@@ -25,7 +28,7 @@ public sealed class ApiKeyMiddleware
             throw new InvalidOperationException(
                 $"API key is not configured. Set '{ApiKeyConfigName}' in configuration.");
 
-        _expectedKey = key;
+        _expectedKeyBytes = Encoding.UTF8.GetBytes(key);
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -33,13 +36,21 @@ public sealed class ApiKeyMiddleware
         var requiresApiKey =
             context.GetEndpoint()?.Metadata.GetMetadata<RequireApiKeyMetadata>() is not null;
 
-        if (requiresApiKey &&
-            (!context.Request.Headers.TryGetValue(HeaderName, out var provided) || provided != _expectedKey))
+        if (requiresApiKey && !IsValidApiKey(context.Request.Headers))
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return;
         }
 
         await _next(context);
+    }
+
+    private bool IsValidApiKey(IHeaderDictionary headers)
+    {
+        if (!headers.TryGetValue(HeaderName, out var provided))
+            return false;
+
+        var providedBytes = Encoding.UTF8.GetBytes(provided.ToString());
+        return CryptographicOperations.FixedTimeEquals(providedBytes, _expectedKeyBytes);
     }
 }

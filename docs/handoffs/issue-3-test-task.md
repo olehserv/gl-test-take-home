@@ -84,8 +84,9 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
 - [x] #17 — Add real API integration tests (step 5).
 - [x] #19 — Modernize DesktopApp: MVVM + DI + async HTTP client (step 6).
 - [x] #21 — Real API versioning via `Asp.Versioning` (step 7).
-- [ ] #23 — Fix the measurement POST Location header (step 8). → ready for review
-      (`docs/handoffs/issue-23-fix-measurement-post.md`).
+- [x] #23 — Fix the measurement POST Location header (step 8).
+- [ ] #25 — Security hardening: constant-time key compare + gate Swagger (step 9). → ready for review
+      (`docs/handoffs/issue-25-security-hardening.md`).
 
 ## Key decisions
 - Keep `InMemoryMeasurementStore` in `Domain` for now (no framework dependency).
