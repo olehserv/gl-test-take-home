@@ -57,7 +57,7 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
    config; return `ProblemDetails` on invalid input; keep `Program.cs` thin.
    → **tracked in #11** (`docs/handoffs/issue-11-api-refactor.md`).
 4. **Unit tests:** `Domain.UnitTests` for `MeasurementValidator` (`[Theory]` +
-   `[InlineData]`), optionally `InMemoryStore` filtering.
+   `[InlineData]`), optionally `InMemoryMeasurementStore` filtering.
 5. **Integration tests:** real tests via `WebApplicationFactory<Program>` —
    202 / 401 / 400 / POST→GET round-trip; fresh store per test.
 6. **DesktopApp:** typed `IMeasurementApiClient` (`IHttpClientFactory` +
@@ -79,7 +79,7 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
 - [ ] #11 — Refactor the API into a thin web layer (step 3).
 
 ## Key decisions
-- Keep `InMemoryStore` in `Domain` for now (no framework dependency).
+- Keep `InMemoryMeasurementStore` in `Domain` for now (no framework dependency).
 
 ## Open questions / risks
 - WPF runs only on Windows; verify the desktop app there before marking done.

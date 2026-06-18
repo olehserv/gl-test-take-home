@@ -12,7 +12,7 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddSingleton<IMeasurementStore, InMemoryStore>();
+        builder.Services.AddSingleton<IMeasurementStore, InMemoryMeasurementStore>();
         builder.Services.AddProblemDetails();
 
         var app = builder.Build();

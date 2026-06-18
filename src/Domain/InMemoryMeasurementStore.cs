@@ -1,13 +1,6 @@
-﻿namespace Domain;
+namespace Domain;
 
-public interface IMeasurementStore
-{
-    Task AddAsync(Measurement m);
-
-    Task<IEnumerable<Measurement>> QueryAsync(string? type, DateTimeOffset since);
-}
-
-public class InMemoryStore : IMeasurementStore
+public class InMemoryMeasurementStore : IMeasurementStore
 {
     private readonly List<Measurement> _items = [];
     private readonly object _lock = new();
