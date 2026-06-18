@@ -34,15 +34,19 @@ public class Program
 
         var app = builder.Build();
 
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
+        // Swagger describes the full API surface; don't serve it in Production.
+        if (!app.Environment.IsProduction())
         {
-            var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-            foreach (var description in provider.ApiVersionDescriptions)
-                options.SwaggerEndpoint(
-                    $"/swagger/{description.GroupName}/swagger.json",
-                    description.GroupName.ToUpperInvariant());
-        });
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+                foreach (var description in provider.ApiVersionDescriptions)
+                    options.SwaggerEndpoint(
+                        $"/swagger/{description.GroupName}/swagger.json",
+                        description.GroupName.ToUpperInvariant());
+            });
+        }
 
         app.UseMiddleware<ApiKeyMiddleware>();
 
