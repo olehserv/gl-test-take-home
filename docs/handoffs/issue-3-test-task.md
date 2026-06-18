@@ -68,7 +68,8 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
    `Asp.Versioning` (declare a version set, version the endpoints, surface versions in
    Swagger); keep `/api/v1/...` URLs working. → **tracked in #21**
    (`docs/handoffs/issue-21-api-versioning.md`).
-8. **Security hardening:** (raised in the #11 review)
+8. **Fix Measurement Post Api:** fix to use Type instead of MeasurementId
+9. **Security hardening:** (raised in the #11 review)
    - Compare the API key in **constant time** (`CryptographicOperations.FixedTimeEquals`)
      and consider replacing the hand-rolled check with real ASP.NET
      authentication/authorization middleware (`AddAuthentication` + `RequireAuthorization`).
@@ -82,8 +83,9 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
 - [x] #15 — Add unit tests (step 4).
 - [x] #17 — Add real API integration tests (step 5).
 - [x] #19 — Modernize DesktopApp: MVVM + DI + async HTTP client (step 6).
-- [ ] #21 — Real API versioning via `Asp.Versioning` (step 7). → ready for review
-      (`docs/handoffs/issue-21-api-versioning.md`).
+- [x] #21 — Real API versioning via `Asp.Versioning` (step 7).
+- [ ] #23 — Fix the measurement POST Location header (step 8). → ready for review
+      (`docs/handoffs/issue-23-fix-measurement-post.md`).
 
 ## Key decisions
 - Keep `InMemoryMeasurementStore` in `Domain` for now (no framework dependency).
