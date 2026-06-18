@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Unit tests for the Domain library.
+    Test framework, packages (xunit, FluentAssertions, ...) and global usings come
+    from tests/Directory.Build.props, so this project only declares what is unique
+    to it: a reference to the Domain library under test.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>
