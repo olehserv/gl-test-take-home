@@ -2,6 +2,7 @@
 using System.Net;
 using System.Windows;
 using System.Windows.Threading;
+using Microsoft.Extensions.Options;
 
 namespace DesktopApp;
 
@@ -9,9 +10,12 @@ public partial class MainWindow : Window
 {
     private System.Timers.Timer _timer = new System.Timers.Timer(1000);
     private readonly WebClient _client = new WebClient(); // sync, no DI
+    private readonly ApiOptions _options;
 
-    public MainWindow()
+    public MainWindow(IOptions<ApiOptions> options)
     {
+        _options = options.Value;
+
         InitializeComponent();
 
         _timer.Elapsed += (s, e) =>
@@ -19,7 +23,7 @@ public partial class MainWindow : Window
             try
             {
                 // Blocking call to local API
-                var json = _client.DownloadString("https://localhost:7296/api/v1/measurements?type=HeartRate");
+                var json = _client.DownloadString($"{_options.BaseUrl}/api/v1/measurements?type=HeartRate");
 
                 Dispatcher.Invoke(() =>
                 {
@@ -37,7 +41,7 @@ public partial class MainWindow : Window
         // Imperative UI logic
         MessageBox.Show("Refreshing...");
 
-        var json = _client.DownloadString("https://localhost:7296/healthz");
+        var json = _client.DownloadString($"{_options.BaseUrl}/healthz");
 
         MessageBox.Show("OK: " + json);
     }
