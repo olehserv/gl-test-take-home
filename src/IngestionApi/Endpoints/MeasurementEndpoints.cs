@@ -31,7 +31,7 @@ public static class MeasurementEndpoints
 
             await store.AddAsync(m);
 
-            return Results.Accepted($"/api/v1/measurements/{m.MeasurementId}", m); //todo: fix to use Type instead of MeasurementId
+            return Results.Accepted($"/api/v1/measurements?type={Uri.EscapeDataString(m.Type)}", m);
         })
         .MapToApiVersion(V1)
         .WithMetadata(new RequireApiKeyMetadata());

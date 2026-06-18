@@ -80,7 +80,7 @@ public class MeasurementApiIntegrationTests : IDisposable
 
         response.StatusCode.Should().Be(HttpStatusCode.Accepted);
         response.Headers.Location.Should().NotBeNull();
-        response.Headers.Location!.ToString().Should().Contain(measurement.MeasurementId.ToString());
+        response.Headers.Location!.ToString().Should().Contain($"type={measurement.Type}");
     }
 
     [Fact]
