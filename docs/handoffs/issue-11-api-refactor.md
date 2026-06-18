@@ -49,6 +49,12 @@ In `src/IngestionApi/Program.cs`:
 - Unit tests (#future) and real integration tests (#future) — separate steps 4–5.
 - DesktopApp and DeviceSimulator changes.
 
+## Follow-up tidy-up (not part of #11's API work)
+- Split `IMeasurementStore` and its in-memory implementation into separate files
+  (one type per file): interface in `IMeasurementStore.cs`, impl in
+  `InMemoryMeasurementStore.cs`. Renamed `InMemoryStore` → `InMemoryMeasurementStore`.
+  DI registration updated in `Program.cs`. Pure rename/move — no behavior change.
+
 ## Key decisions
 - Auth as an **endpoint filter** (not global middleware) so `/healthz` and Swagger
   stay open.
