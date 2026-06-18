@@ -64,8 +64,10 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
    System.Text.Json), DI host in `App.xaml.cs`, `MainViewModel`
    (CommunityToolkit.Mvvm), bind `DataGrid` + `RefreshCommand`, show errors in a
    `Status` field. No logic in code-behind.
-7. **Polish:** point `DeviceSimulator` at `Domain.Measurement`; write `SOLUTION.md`;
-   confirm CI is green.
+7. **API versioning:** replace the hardcoded `v1` URL segment with real versioning via
+   `Asp.Versioning` (declare a version set, version the endpoints, surface versions in
+   Swagger); keep `/api/v1/...` URLs working. → **tracked in #21**
+   (`docs/handoffs/issue-21-api-versioning.md`).
 8. **Security hardening:** (raised in the #11 review)
    - Compare the API key in **constant time** (`CryptographicOperations.FixedTimeEquals`)
      and consider replacing the hand-rolled check with real ASP.NET
@@ -79,8 +81,9 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
 - [x] #11 — Refactor the API into a thin web layer (step 3).
 - [x] #15 — Add unit tests (step 4).
 - [x] #17 — Add real API integration tests (step 5).
-- [ ] #19 — Modernize DesktopApp: MVVM + DI + async HTTP client (step 6). → ready for review
-      (`docs/handoffs/issue-19-desktop-mvvm.md`).
+- [x] #19 — Modernize DesktopApp: MVVM + DI + async HTTP client (step 6).
+- [ ] #21 — Real API versioning via `Asp.Versioning` (step 7). → ready for review
+      (`docs/handoffs/issue-21-api-versioning.md`).
 
 ## Key decisions
 - Keep `InMemoryMeasurementStore` in `Domain` for now (no framework dependency).
