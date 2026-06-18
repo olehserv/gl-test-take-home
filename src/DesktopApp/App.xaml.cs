@@ -1,6 +1,7 @@
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace DesktopApp;
 
@@ -21,6 +22,14 @@ public partial class App : Application
 
         var services = new ServiceCollection();
         services.Configure<ApiOptions>(configuration.GetSection(ApiOptions.SectionName));
+
+        services.AddHttpClient<IMeasurementApiClient, MeasurementApiClient>((provider, http) =>
+        {
+            var options = provider.GetRequiredService<IOptions<ApiOptions>>().Value;
+            http.BaseAddress = new Uri(options.BaseUrl.TrimEnd('/') + "/");
+        });
+
+        services.AddSingleton<MainViewModel>();
         services.AddSingleton<MainWindow>();
         _services = services.BuildServiceProvider();
     }
