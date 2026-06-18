@@ -78,8 +78,9 @@ Layering rule: everything depends on `Domain`; `Domain` depends on nothing.
 - [x] #9 — Extract domain logic into a `Domain` class library (step 2).
 - [x] #11 — Refactor the API into a thin web layer (step 3).
 - [x] #15 — Add unit tests (step 4).
-- [x] #17 — Add real API integration tests (step 5). → ready for review
-      (`docs/handoffs/issue-17-api-integration-tests.md`).
+- [x] #17 — Add real API integration tests (step 5).
+- [ ] #19 — Modernize DesktopApp: MVVM + DI + async HTTP client (step 6). → ready for review
+      (`docs/handoffs/issue-19-desktop-mvvm.md`).
 
 ## Key decisions
 - Keep `InMemoryMeasurementStore` in `Domain` for now (no framework dependency).
