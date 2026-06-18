@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="IngestionApi.IntegrationTests" />
+  </ItemGroup>
+
 </Project>
