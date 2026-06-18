@@ -9,9 +9,9 @@ namespace IngestionApi.Auth;
 /// </summary>
 public sealed class ApiKeyMiddleware
 {
-    public const string HeaderName = "x-api-key";
+    internal const string HeaderName = "x-api-key";
 
-    private const string ApiKeyConfigName = "Api:Key";
+    internal const string ApiKeyConfigName = "Api:Key";
 
     private readonly RequestDelegate _next;
     private readonly string _expectedKey;
